@@ -5,6 +5,7 @@ clear
 
 # avoid some implicit errors
 set -euo pipefail
+shopt -s nullglob
 
 # title of the script
 echo '
@@ -51,16 +52,14 @@ echo '
 '
 
 # remove all .bash_history*.tmp files in HOME
-tmplist=$(ls "$HOME"/.bash_history*.tmp 2>/dev/null || echo '')
-temps=$(echo "$tmplist" | tr '\n' ' ' | xargs)
-if [ -n "$temps" ]; then
-    echo 'Temporary bash history files detected:'
-    echo "$temps"
+tmpfiles=("$HOME"/.bash_history*.tmp)
+if (( ${#tmpfiles[@]} )); then
     echo '==> Removing temporary bash history files...'
-    rm "$temps"
+    rm -v "${tmpfiles[@]}"
 else
     echo 'No temporary bash history files found.'
 fi
+
 echo '
 ----------------------------------------------------------------
 '
