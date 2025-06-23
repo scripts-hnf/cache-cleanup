@@ -20,6 +20,8 @@ echo '
 echo '==> Cleaning pacman cache...'
 sudo pacman -Sc
 sudo pacman -Scc
+yay -Sc
+yay -Scc
 echo '
 ----------------------------------------------------------------
 '
